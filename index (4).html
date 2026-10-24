@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1f3a">
+<title>Cyano · Négatifs</title>
+<style>
+:root{--bg:#f3f7fb;--card:#fff;--ink:#0b1f3a;--mute:#6a7f98;--line:#dbe5f0;--g1:#1b3fa0;--g2:#1e90d6;--g3:#7fe0f0;--grad:linear-gradient(135deg,var(--g1),var(--g2) 60%,var(--g3))}
+@media(prefers-color-scheme:dark){:root{--bg:#050f1d;--card:#0c1d33;--ink:#eaf2fb;--mute:#8aa2bd;--line:#1a3250}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+.app{max-width:470px;margin:auto}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(.6rem + env(safe-area-inset-top)) 1rem .6rem;background:var(--bg);border-bottom:1px solid var(--line)}
+.logo{font:italic 700 1.7rem "Snell Roundhand","Brush Script MT","Segoe Script",cursive;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.2em}
+header small{color:var(--mute)}
+.stories{display:flex;gap:.9rem;overflow-x:auto;padding:.9rem 1rem;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.story{flex:none;width:68px;text-align:center;background:none;border:0;color:var(--ink);font:inherit;font-size:.72rem;cursor:pointer}
+.ring{width:66px;height:66px;border-radius:50%;padding:3px;background:var(--grad);margin-bottom:.25rem}
+.ring i{display:block;width:100%;height:100%;border-radius:50%;border:3px solid var(--bg)}
+.story[aria-pressed=true] .ring{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--g2)}
+.post{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ph{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem}
+.av{width:32px;height:32px;border-radius:50%;background:var(--grad)}
+.ph b{display:block;line-height:1.1}.ph span{font-size:.75rem;color:var(--mute)}
+.media{position:relative;background:repeating-conic-gradient(#8fa3bb 0 25%,#b9c8da 0 50%) 0 0/16px 16px;min-height:300px;display:flex;align-items:center;justify-content:center}
+.media canvas{width:100%;height:auto;display:none}
+.media.on canvas{display:block}
+.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;background:linear-gradient(160deg,#0b1f3a,#14509a);color:#fff;cursor:pointer;text-align:center;padding:1rem}
+.media.on .empty{display:none}
+.empty svg{width:54px;height:54px}
+.empty u{text-decoration:none;padding:.5rem 1.2rem;border-radius:8px;background:var(--grad);font-weight:600}
+.actions{display:flex;gap:.2rem;padding:.4rem .5rem}
+.actions button{background:none;border:0;color:var(--ink);padding:.45rem;border-radius:50%;cursor:pointer}
+.actions button[aria-pressed=true]{color:var(--g2)}
+.actions button:disabled{opacity:.3}
+.actions svg{width:26px;height:26px;display:block}
+.sp{flex:1}
+.cap{padding:0 .9rem .6rem}
+.time{font:700 1.5rem/1.2 system-ui;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cap small{color:var(--mute);display:block}
+details{border-top:1px solid var(--line);padding:.2rem .9rem}
+summary{padding:.7rem 0;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--mute)}details[open] summary::after{content:"–"}
+label{display:flex;justify-content:space-between;margin:.6rem 0 .1rem;font-size:.85rem;color:var(--mute)}
+input[type=range]{width:100%;accent-color:var(--g2)}
+select,input[type=number]{width:100%;padding:.55rem;font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px}
+.row{display:flex;gap:.6rem;padding-bottom:.8rem}.row>*{flex:1}
+.check{display:flex;gap:.5rem;align-items:center;color:var(--ink)}
+.check input{accent-color:var(--g2)}
+.hint{padding:.8rem 1rem;color:var(--mute);font-size:.8rem}
+/* Protocole */
+.step{display:flex;gap:.8rem;padding:.9rem 1rem;border-bottom:1px solid var(--line);background:var(--card)}
+.step>b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center}
+.step h3{margin:0 0 .2rem;font-size:1rem}.step p{margin:0;color:var(--mute)}
+.step img{width:100%;border-radius:10px;margin-top:.6rem;background:var(--line)}
+.sec{padding:1rem 1rem .2rem;font-weight:700;font-size:1.1rem}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;background:var(--bg);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:9}
+nav div{display:flex;width:100%;max-width:470px}
+nav button{flex:1;background:none;border:0;color:var(--mute);padding:.6rem 0 .5rem;font:inherit;font-size:.72rem;cursor:pointer}
+nav button svg{width:26px;height:26px;display:block;margin:auto}
+nav button[aria-selected=true]{color:var(--ink)}
+nav button[aria-selected=true] svg{color:var(--g2)}
+header select{width:auto;padding:.3rem .5rem;border-radius:20px;font-size:.8rem}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--g2);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="app">
+<header><span class="logo">Cyano</span><small id="status">Négatifs cyanotype</small><select id="lang" aria-label="Langue"></select></header>
+
+<section id="gen">
+<div class="stories" id="stories" aria-label="Styles prédéfinis"></div>
+<article class="post">
+<div class="ph"><div class="av"></div><div><b id="title">ton-negatif</b><span id="sub">Aucune photo choisie</span></div></div>
+<div class="media" id="media">
+<canvas id="cv" width="400" height="400"></canvas>
+<div class="empty" id="pick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg><span>Crée ton négatif à partir de ta galerie</span><u>Choisir une photo</u></div>
+</div>
+<input type="file" id="file" accept="image/*" hidden>
+<div class="actions">
+<button id="dl" disabled aria-label="Télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-4 5 5 5-5M5 20h14"/></svg></button>
+<button id="share" hidden aria-label="Partager"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21 3-9 18-2-8-8-2z"/></svg></button>
+<button id="invBtn" aria-pressed="true" aria-label="Inverser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
+<button id="mirBtn" aria-pressed="false" aria-label="Miroir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 7 3 18h5zM16 7l5 11h-5z"/></svg></button>
+<span class="sp"></span>
+<button id="swap" aria-label="Changer de photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
+</div>
+<div class="cap"><div class="time" id="time">—</div><small id="range">Temps d’exposition estimé</small></div>
+
+<details open><summary>Réglages du négatif</summary>
+<label>Densité du noir <output id="o1"></output></label><input type="range" id="black" min="0.3" max="2" step="0.05" value="1">
+<label>Alpha (opacité de l’encre) <output id="o3"></output></label><input type="range" id="alpha" min="0.1" max="1" step="0.05" value="1">
+<label>Contraste <output id="o2"></output></label><input type="range" id="contrast" min="0.5" max="2.5" step="0.05" value="1.2">
+<label>Gamma <output id="o4"></output></label><input type="range" id="gamma" min="0.5" max="2" step="0.05" value="1">
+<label class="check"><input type="checkbox" id="transp" checked> Fond transparent (PNG)</label>
+<label>Largeur de sortie (px)</label><input type="number" id="size" value="2400" min="300" max="6000" step="100">
+<div style="height:.8rem"></div>
+</details>
+<details><summary>Exposition</summary>
+<div class="row"><div><label>Source UV</label><select id="src"><option value="sun">Soleil</option><option value="led">LED 365 nm</option><option value="tube">Tubes UV</option></select></div>
+<div><label>Support</label><select id="paper"><option value="1">Aquarelle coton</option><option value="0.85">Papier standard</option><option value="1.3">Tissu</option></select></div></div>
+<div id="uvrow"><label>Indice UV <output id="o5"></output></label><input type="range" id="uv" min="1" max="11" step="1" value="5"><div style="height:.8rem"></div></div>
+</details>
+<p class="hint">Estimation indicative : fais toujours une bande test. Imprime à 100 % sur film transparent.</p>
+</article>
+</section>
+
+<section id="edu" hidden>
+<div class="sec">Protocole cyanotype</div>
+<div class="step"><b>1</b><div><h3>Préparer les solutions</h3><p>A : 25 g de citrate d’ammonium ferrique dans 100 ml d’eau. B : 10 g de ferricyanure de potassium dans 100 ml d’eau. Stocke-les séparément, à l’abri de la lumière.</p></div></div>
+<div class="step"><b>2</b><div><h3>Mélanger A + B</h3><p>À parts égales, juste avant l’emploi, sous lumière faible.</p></div></div>
+<div class="step"><b>3</b><div><h3>Enduire le papier</h3><p>Une couche fine et régulière au pinceau mousse. Laisse sécher à plat, dans le noir.</p></div></div>
+<div class="step"><b>4</b><div><h3>Imprimer le négatif</h3><p>Utilise l’onglet Créer, puis imprime sur film transparent. Le noir doit être dense.</p></div></div>
+<div class="step"><b>5</b><div><h3>Exposer</h3><p>Négatif face imprimée contre le papier, sous verre, au soleil ou sous lampe UV selon le temps estimé.</p><img src="assets/exposition.jpg" alt="Papier sous verre en exposition" onerror="this.remove()"></div></div>
+<div class="step"><b>6</b><div><h3>Repérer la fin</h3><p>L’image passe du jaune-vert au gris-bronze.</p></div></div>
+<div class="step"><b>7</b><div><h3>Rincer</h3><p>Eau froide courante pendant 5 minutes : le bleu apparaît et se fixe.</p><img src="assets/rincage.jpg" alt="Rinçage d’un tirage" onerror="this.remove()"></div></div>
+<div class="step"><b>8</b><div><h3>Intensifier (option)</h3><p>Bain d’eau oxygénée très dilué, puis séchage à plat.</p></div></div>
+<div class="sec">Diagnostic</div>
+<div class="step"><b>!</b><div><h3>Surexposé ou sous-exposé ?</h3><p>Terne et sombre : réduis le temps ou allège le négatif. Bleu délavé qui part au rinçage : allonge le temps ou augmente la densité.</p></div></div>
+<p class="hint">Gants et lunettes, pièce aérée. Respecte les règles locales pour l’élimination des produits.</p>
+</section>
+</div>
+
+<nav><div>
+<button data-tab="gen" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>Créer</button>
+<button data-tab="edu" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM8 7h7"/></svg>Apprendre</button>
+</div></nav>
+
+<script>
+const $ = id => document.getElementById(id);
+const cv = $('cv'), ctx = cv.getContext('2d', {willReadFrequently:true});
+let img = null, name = 'negatif', invert = true, mirror = false;
+
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('nav button').forEach(x => x.setAttribute('aria-selected', x === b));
+  $('gen').hidden = b.dataset.tab !== 'gen'; $('edu').hidden = b.dataset.tab !== 'edu';
+  scrollTo(0, 0);
+});
+
+// Styles prédéfinis, présentés comme des stories
+const presets = [
+  ['Naturel', {black:1, contrast:1.2, gamma:1}],
+  ['Doux', {black:.8, contrast:1, gamma:1.15}],
+  ['Contrasté', {black:1.1, contrast:1.9, gamma:1}],
+  ['Dense', {black:1.6, contrast:1.3, gamma:.9}],
+  ['Lumineux', {black:1, contrast:1.1, gamma:.7}],
+  ['Graphique', {black:1.3, contrast:2.4, gamma:1}]
+];
+presets.forEach(([n, v], i) => {
+  const b = document.createElement('button');
+  b.className = 'story'; b.setAttribute('aria-pressed', i === 0);
+  b.innerHTML = '<div class="ring"><i style="background:rgba(' + (255 - i*30) + ',' + (255 - i*30) + ',' + (255 - i*30) + ',1)"></i></div>' + n;
+  b.onclick = () => {
+    document.querySelectorAll('.story').forEach(s => s.setAttribute('aria-pressed', s === b));
+    for (const k in v) $(k).value = v[k];
+    render();
+  };
+  $('stories').appendChild(b);
+});
+
+const outs = {black:'o1', contrast:'o2', alpha:'o3', gamma:'o4', uv:'o5'};
+const labels = () => { for (const k in outs) $(outs[k]).textContent = $(k).value; };
+
+const pick = () => $('file').click();
+$('pick').onclick = pick; $('swap').onclick = pick;
+$('file').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  name = f.name.replace(/\.[^.]+$/, '');
+  const url = URL.createObjectURL(f), im = new Image();
+  im.onload = () => { img = im; URL.revokeObjectURL(url); $('media').classList.add('on'); $('title').textContent = name; render(); };
+  im.src = url;
+};
+
+$('invBtn').onclick = e => { invert = !invert; e.currentTarget.setAttribute('aria-pressed', invert); render(); };
+$('mirBtn').onclick = e => { mirror = !mirror; e.currentTarget.setAttribute('aria-pressed', mirror); render(); };
+
+function render(){
+  labels();
+  $('uvrow').hidden = $('src').value !== 'sun';
+  if (!img) return;
+  const w = Math.min(+$('size').value || 2400, 6000), h = Math.round(img.height * w / img.width);
+  cv.width = w; cv.height = h;
+  ctx.save();
+  if (mirror){ ctx.translate(w, 0); ctx.scale(-1, 1); }
+  ctx.drawImage(img, 0, 0, w, h);
+  ctx.restore();
+  const d = ctx.getImageData(0, 0, w, h), p = d.data;
+  const gain = +$('black').value, c = +$('contrast').value, a = +$('alpha').value,
+        g = +$('gamma').value, tr = $('transp').checked;
+  let sum = 0;
+  for (let i = 0; i < p.length; i += 4){
+    let l = (0.299*p[i] + 0.587*p[i+1] + 0.114*p[i+2]) / 255;
+    l = Math.min(1, Math.max(0, (l - 0.5) * c + 0.5));
+    l = Math.pow(l, g);
+    let n = Math.min(1, (invert ? 1 - l : l) * gain);
+    sum += n;
+    if (tr){ p[i] = p[i+1] = p[i+2] = 0; p[i+3] = Math.round(n * a * 255); }
+    else { const v = Math.round(255 * (1 - n * a)); p[i] = p[i+1] = p[i+2] = v; p[i+3] = 255; }
+  }
+  ctx.putImageData(d, 0, 0);
+  $('dl').disabled = false;
+  $('sub').textContent = w + ' × ' + h + ' px';
+  estimate(sum / (p.length / 4) * a);
+}
+
+function estimate(m){
+  const s = $('src').value, paper = +$('paper').value;
+  const base = s === 'sun' ? 12 * 5 / +$('uv').value : s === 'led' ? 10 : 15;
+  const tm = base * (0.6 + 0.8 * m) * paper;
+  const f = x => x < 1 ? Math.round(x*60) + ' ' + t('#s') : x < 90 ? Math.round(x) + ' ' + t('#min') : (x/60).toFixed(1) + ' ' + t('#h');
+  $('time').textContent = f(tm);
+  $('range').textContent = t('Bande test conseillée') + ' : ' + f(tm*0.7) + ' – ' + f(tm*1.3);
+}
+
+document.querySelectorAll('input[type=range],input[type=checkbox],input[type=number],select')
+  .forEach(el => el.addEventListener('input', render));
+labels();
+
+const blob = cb => cv.toBlob(cb, 'image/png');
+$('dl').onclick = () => blob(b => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = name + '-negatif.png';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+if (navigator.canShare) $('share').hidden = false;
+$('share').onclick = () => blob(b => {
+  const f = new File([b], name + '-negatif.png', {type:'image/png'});
+  if (navigator.canShare({files:[f]})) navigator.share({files:[f], title:t('Négatif cyanotype')}).catch(() => {});
+});
+
+// ===== Internationalisation : fr / en / es / zh =====
+// Chaque ligne : [français (clé), anglais, espagnol, chinois]
+const ROWS = [
+["Négatifs cyanotype","Cyanotype negatives","Negativos de cianotipia","蓝晒底片"],
+["Langue","Language","Idioma","语言"],
+["Styles prédéfinis","Preset styles","Estilos predefinidos","预设风格"],
+["Télécharger","Download","Descargar","下载"],
+["Partager","Share","Compartir","分享"],
+["Inverser","Invert","Invertir","反相"],
+["Miroir","Mirror","Espejo","镜像"],
+["Changer de photo","Change photo","Cambiar foto","更换照片"],
+["Aucune photo choisie","No photo selected","Ninguna foto elegida","尚未选择照片"],
+["Crée ton négatif à partir de ta galerie","Create your negative from your gallery","Crea tu negativo desde tu galería","从相册创建你的底片"],
+["Choisir une photo","Choose a photo","Elegir una foto","选择照片"],
+["Temps d’exposition estimé","Estimated exposure time","Tiempo de exposición estimado","预计曝光时间"],
+["Bande test conseillée","Suggested test strip","Tira de prueba sugerida","建议试条范围"],
+["Réglages du négatif","Negative settings","Ajustes del negativo","底片设置"],
+["Exposition","Exposure","Exposición","曝光"],
+["Densité du noir","Black density","Densidad del negro","黑色浓度"],
+["Alpha (opacité de l’encre)","Alpha (ink opacity)","Alfa (opacidad de la tinta)","Alpha（墨水不透明度）"],
+["Contraste","Contrast","Contraste","对比度"],
+["Gamma","Gamma","Gamma","伽马"],
+["Fond transparent (PNG)","Transparent background (PNG)","Fondo transparente (PNG)","透明背景 (PNG)"],
+["Largeur de sortie (px)","Output width (px)","Ancho de salida (px)","输出宽度 (px)"],
+["Source UV","UV source","Fuente UV","紫外光源"],
+["Support","Paper / support","Soporte","承印材料"],
+["Indice UV","UV index","Índice UV","紫外线指数"],
+["Soleil","Sun","Sol","阳光"],
+["LED 365 nm","365 nm LED","LED 365 nm","365 nm LED"],
+["Tubes UV","UV tubes","Tubos UV","紫外灯管"],
+["Aquarelle coton","Cotton watercolor paper","Papel acuarela de algodón","棉质水彩纸"],
+["Papier standard","Standard paper","Papel estándar","普通纸"],
+["Tissu","Fabric","Tela","布料"],
+["Estimation indicative : fais toujours une bande test. Imprime à 100 % sur film transparent.","Rough estimate: always make a test strip. Print at 100% on transparent film.","Estimación orientativa: haz siempre una tira de prueba. Imprime al 100 % en film transparente.","仅为估算：请务必先做试条。以 100% 比例打印在透明胶片上。"],
+["Créer","Create","Crear","创建"],
+["Apprendre","Learn","Aprender","学习"],
+["Protocole cyanotype","Cyanotype protocol","Protocolo de cianotipia","蓝晒流程"],
+["Préparer les solutions","Prepare the solutions","Preparar las soluciones","配制溶液"],
+["A : 25 g de citrate d’ammonium ferrique dans 100 ml d’eau. B : 10 g de ferricyanure de potassium dans 100 ml d’eau. Stocke-les séparément, à l’abri de la lumière.","A: 25 g of ferric ammonium citrate in 100 ml of water. B: 10 g of potassium ferricyanide in 100 ml of water. Store them separately, away from light.","A: 25 g de citrato de amonio férrico en 100 ml de agua. B: 10 g de ferricianuro de potasio en 100 ml de agua. Guárdalas por separado, protegidas de la luz.","A液：25 克柠檬酸铁铵溶于 100 毫升水。B液：10 克铁氰化钾溶于 100 毫升水。分开避光保存。"],
+["Mélanger A + B","Mix A + B","Mezclar A + B","混合 A + B"],
+["À parts égales, juste avant l’emploi, sous lumière faible.","In equal parts, just before use, under dim light.","A partes iguales, justo antes de usarlas, con poca luz.","等量混合，使用前现配，在弱光下操作。"],
+["Enduire le papier","Coat the paper","Sensibilizar el papel","涂布纸张"],
+["Une couche fine et régulière au pinceau mousse. Laisse sécher à plat, dans le noir.","One thin, even coat with a foam brush. Let it dry flat, in the dark.","Una capa fina y uniforme con brocha de espuma. Deja secar en plano, en la oscuridad.","用海绵刷涂一层薄而均匀的药液，在暗处平放晾干。"],
+["Imprimer le négatif","Print the negative","Imprimir el negativo","打印底片"],
+["Utilise l’onglet Créer, puis imprime sur film transparent. Le noir doit être dense.","Use the Create tab, then print on transparent film. The black must be dense.","Usa la pestaña Crear y luego imprime en film transparente. El negro debe ser denso.","使用“创建”页生成底片，再打印到透明胶片上。黑色必须足够浓。"],
+["Exposer","Expose","Exponer","曝光"],
+["Négatif face imprimée contre le papier, sous verre, au soleil ou sous lampe UV selon le temps estimé.","Place the negative printed side against the paper, under glass, in sunlight or under a UV lamp for the estimated time.","Coloca el negativo con la cara impresa contra el papel, bajo vidrio, al sol o bajo lámpara UV según el tiempo estimado.","将底片印刷面贴紧纸张，压上玻璃，按预计时间在阳光或紫外灯下曝光。"],
+["Repérer la fin","Spot the end","Detectar el final","判断曝光结束"],
+["L’image passe du jaune-vert au gris-bronze.","The image shifts from yellow-green to bronze-grey.","La imagen pasa de amarillo-verde a gris bronce.","画面由黄绿色变为古铜灰色。"],
+["Rincer","Rinse","Enjuagar","冲洗"],
+["Eau froide courante pendant 5 minutes : le bleu apparaît et se fixe.","Cold running water for 5 minutes: the blue appears and sets.","Agua fría corriente durante 5 minutos: el azul aparece y se fija.","用流动冷水冲洗 5 分钟：蓝色显现并固定。"],
+["Intensifier (option)","Intensify (optional)","Intensificar (opcional)","加深（可选）"],
+["Bain d’eau oxygénée très dilué, puis séchage à plat.","A very dilute hydrogen peroxide bath, then dry flat.","Baño de agua oxigenada muy diluida y secado en plano.","用极稀的双氧水浸泡，然后平放晾干。"],
+["Diagnostic","Troubleshooting","Diagnóstico","问题排查"],
+["Surexposé ou sous-exposé ?","Over- or underexposed?","¿Sobreexpuesto o subexpuesto?","曝光过度还是不足？"],
+["Terne et sombre : réduis le temps ou allège le négatif. Bleu délavé qui part au rinçage : allonge le temps ou augmente la densité.","Dull and dark: shorten the time or lighten the negative. Washed-out blue that rinses away: lengthen the time or increase the density.","Apagado y oscuro: reduce el tiempo o aclara el negativo. Azul desvaído que se va al enjuagar: alarga el tiempo o aumenta la densidad.","暗沉发黑：缩短时间或减淡底片。蓝色发淡且被冲掉：延长时间或增加底片浓度。"],
+["Gants et lunettes, pièce aérée. Respecte les règles locales pour l’élimination des produits.","Wear gloves and goggles, work in a ventilated room. Follow local rules for disposing of the chemicals.","Usa guantes y gafas, en un lugar ventilado. Respeta las normas locales para eliminar los productos.","佩戴手套和护目镜，在通风处操作。请按当地规定处理化学药品。"],
+["Papier sous verre en exposition","Paper under glass during exposure","Papel bajo vidrio en exposición","压在玻璃下曝光的纸张"],
+["Rinçage d’un tirage","Rinsing a print","Enjuague de una copia","冲洗成品"],
+["Naturel","Natural","Natural","自然"],
+["Doux","Soft","Suave","柔和"],
+["Contrasté","Contrasty","Contrastado","高对比"],
+["Dense","Dense","Denso","浓重"],
+["Lumineux","Bright","Luminoso","明亮"],
+["Graphique","Graphic","Gráfico","图形"],
+["Négatif cyanotype","Cyanotype negative","Negativo de cianotipia","蓝晒底片"],
+["#s","s","s","秒"],["#min","min","min","分钟"],["#h","h","h","小时"]
+];
+const IDX = {fr:0, en:1, es:2, zh:3};
+const NAMES = {fr:'Français', en:'English', es:'Español', zh:'中文'};
+const DICT = {}; ROWS.forEach(r => DICT[r[0]] = r);
+let lang = '';
+try { lang = localStorage.getItem('lang') || ''; } catch(e) {}
+if (!(lang in IDX)) { const n = (navigator.language || 'fr').slice(0, 2); lang = n in IDX ? n : 'fr'; }
+const t = s => (DICT[s] && DICT[s][IDX[lang]]) || s;
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.title = 'Cyano · ' + t('Négatifs cyanotype');
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let n;
+  while ((n = w.nextNode())) {
+    if (n.__fr === undefined) { const s = n.nodeValue.trim(); if (!DICT[s]) continue; n.__fr = s; }
+    n.nodeValue = n.nodeValue.replace(n.nodeValue.trim(), () => t(n.__fr));
+  }
+  document.querySelectorAll('[aria-label],[alt]').forEach(e => ['aria-label', 'alt'].forEach(a => {
+    if (!e.hasAttribute(a)) return;
+    const k = '_' + a; if (e[k] === undefined) e[k] = e.getAttribute(a);
+    e.setAttribute(a, t(e[k]));
+  }));
+  render();
+}
+const sel = $('lang');
+for (const k in NAMES) sel.add(new Option(NAMES[k], k));
+sel.value = lang;
+sel.onchange = () => { lang = sel.value; try { localStorage.setItem('lang', lang); } catch(e) {} applyLang(); };
+applyLang();
+</script>
+</body>
+</html>
